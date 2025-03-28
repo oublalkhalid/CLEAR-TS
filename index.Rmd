@@ -1,6 +1,7 @@
 ---
-title: '**Results Template**'
-subtitle: A Subtitle
+title: '**LEAR: Disentangling Time Series for Interpreting and Explaining Latent
+Representations via Contrastive Sparsity-Inducing**'
+subtitle: Extended Results - Benchmarking
 output:
   html_document:
     theme: cerulean
@@ -33,36 +34,21 @@ csl: utils/apa.csl
 ---
 
 
-<!-- 
-!!!! IMPORTANT: run `source("utils/render.R")` to publish instead of clicking on 'Knit'
--->
+# Experiment #1 (Extending Table 2 of the main paper by including results comparing to iTransformer, Informer and others)
 
-```{r setup, warning=FALSE, message=TRUE, include=FALSE}
-# Set up the environment (or use local alternative `source("utils/config.R")`)
-source("https://raw.githubusercontent.com/RealityBending/TemplateResults/main/utils/config.R")  
-
-fast <- FALSE  # Make this false to skip the chunks
+```{r child=if (fast == FALSE) '2_inferential.Rmd'}
 ```
+## Short Analysis
 
-# Introduction
-
-```{r badges, echo=FALSE, message=TRUE, warning=FALSE, results='asis'}
-# This chunk is a bit complex so don't worry about it: it's made to add badges to the HTML versions
-# NOTE: You have to replace the links accordingly to have working "buttons" on the HTML versions
-if (!knitr::is_latex_output() && knitr::is_html_output()) {
-  cat("![Build](https://github.com/RealityBending/TemplateResults/workflows/Build/badge.svg)
-      [![Website](https://img.shields.io/badge/repo-Readme-2196F3)](https://github.com/RealityBending/TemplateResults)
-      [![Website](https://img.shields.io/badge/visit-website-E91E63)](https://realitybending.github.io/TemplateResults/)
-      [![Website](https://img.shields.io/badge/download-.docx-FF5722)](https://github.com/RealityBending/TemplateResults/raw/main/word_and_pdf/SupplementaryMaterials.docx)
-      [![Website](https://img.shields.io/badge/see-.pdf-FF9800)](https://github.com/RealityBending/TemplateResults/blob/main/word_and_pdf/SupplementaryMaterials.pdf)")
-}
+# Experiment #1 (Extending Table 2 of the main paper by including results comparing to iTransformer, Informer and others)
+```{r child=if (fast == FALSE) '2_inferential.Rmd'}
 ```
+## Short Analysis
 
-This is a template for a data analysis folder that can be easily exported as a [**webpage**](https://realitybending.github.io/TemplateResults/) or as **Supplementary Materials** (e.g., as a [**Word document**](https://github.com/RealityBending/TemplateResults/raw/main/word_and_pdf/SupplementaryMaterials.docx) or a [**PDF**](https://github.com/RealityBending/TemplateResults/blob/main/word_and_pdf/SupplementaryMaterials.pdf)).
-
-How does it look like? Just like this! The README page of this repository, alongside the [webpage](https://realitybending.github.io/TemplateResults/) and the word and PDF documents, were all created from the [index.Rmd](https://github.com/RealityBending/TemplateResults/blob/main/index.Rmd) file.
-
-This means you can easily **share your data analysis**, either by attaching the *PDF* or *Word* file to the publication (as **Supplementary Materials**), or by directly providing the URL of your GitHub repository: the readers can then enjoy your awesome open-access work in a convenient and transparent way.
+# Experiment #2 (Extending Table 2 of the main paper by including results comparing to iTransformer, Informer and others)
+```{r child=if (fast == FALSE) '2_inferential.Rmd'}
+```
+## Short Analysis
 
 ## Features
 
