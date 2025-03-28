@@ -2,40 +2,52 @@ on:
   push:
     branches:
       - main
-  schedule:  # run every week
-    - cron:  '0 0 * * 1'
+  schedule:  # Run every week
+    - cron: '0 0 * * 1'
 
 name: Build
 
 jobs:
   render:
     name: Generate documents
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: r-lib/actions/setup-r@v1
-      - uses: r-lib/actions/setup-pandoc@v1
-      - uses: r-lib/actions/setup-tinytex@v1
-      - run: tlmgr --version
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Set up Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Set up TinyTeX
+        uses: r-lib/actions/setup-tinytex@v2
+      
+      - name: Verify TinyTeX Installation
+        run: tlmgr --version
+
       - name: Install Core Dependencies
         run: |
-            Rscript -e 'install.packages(c("rmarkdown", "remotes", "tidyverse", "insight", "bayestestR", "performance", "parameters", "effectsize", "modelbased", "correlation", "see", "ggrepel"))'
-            Rscript -e 'remotes::install_github("easystats/report")'
-            Rscript -e '# remotes::install_github("easystats/easystats")'
+          Rscript -e 'install.packages(c("rmarkdown", "remotes", "tidyverse", "insight", "bayestestR", "performance", "parameters", "effectsize", "modelbased", "correlation", "see", "ggrepel"))'
+          Rscript -e 'remotes::install_github("easystats/report")'
+
       - name: Install Other Dependencies
         run: |
-            Rscript -e 'install.packages(c("qqplotr", "gridExtra"))'
-      # The section below can be removed for added building speed on GitHub if you don't use Python
-      - name: Install Python
+          Rscript -e 'install.packages(c("qqplotr", "gridExtra"))'
+
+      - name: Install Python Dependencies
         run: |
-            Rscript -e "remotes::install_github('rstudio/reticulate')"
-            Rscript -e "reticulate::install_miniconda()"
-      - name: Render
+          Rscript -e "remotes::install_github('rstudio/reticulate')"
+          Rscript -e "reticulate::install_miniconda()"
+
+      - name: Render Documents
         run: Rscript -e 'source("utils/render.R")'
-      - name: Commit results
+
+      - name: Commit and Push Results
         run: |
-          git commit README.md -m 'Build README.md' || echo "No changes to commit"
-          git commit docs/index.html -m 'Build docs/index.html' || echo "No changes to commit"
-          git commit word_and_pdf/SupplementaryMaterials.docx -m 'Build word_and_pdf/SupplementaryMaterials.docx' || echo "No changes to commit"
-          git commit word_and_pdf/SupplementaryMaterials.pdf -m 'Build word_and_pdf/SupplementaryMaterials.pdf' || echo "No changes to commit"
-          git push origin || echo "No changes to commit"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add README.md docs/index.html word_and_pdf/SupplementaryMaterials.docx word_and_pdf/SupplementaryMaterials.pdf
+          git commit -m 'Build updated documents' || echo "No changes to commit"
+          git push origin || echo "No changes to push"
